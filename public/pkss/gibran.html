@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengukur Cinta Vanya dan Gibran</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f3f4f6;
+        }
+        .heart {
+            color: red;
+            font-size: 50px;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen">
+    <h1 class="text-3xl font-bold mb-4">Pengukur Cinta </h1>
+    <div class="heart mb-4">❤️</div>
+    
+    <div class="bg-white p-6 rounded-lg shadow-md w-80">
+        <h2 class="text-xl font-semibold mb-4">Masukkan Nama</h2>
+        <input type="text" id="name1" placeholder="Nama Vanya" class="border border-gray-300 p-2 rounded mb-4 w-full">
+        <input type="text" id="name2" placeholder="Nama Gibran" class="border border-gray-300 p-2 rounded mb-4 w-full">
+        <button onclick="calculateLove()" class="bg-indigo-600 text-white px-4 py-2 rounded">Hitung Cinta</button>
+        
+        <div id="result" class="mt-4 text-center text-lg font-semibold"></div>
+    </div>
+
+    <script>
+        function calculateLove() {
+            const name1 = document.getElementById('name1').value;
+            const name2 = document.getElementById('name2').value;
+
+            if (name1 === "" || name2 === "") {
+                alert("Silakan masukkan kedua nama!");
+                return;
+            }
+
+            // Menghitung persentase cinta secara acak
+            const loveScore = Math.floor(Math.random() * 101);
+            document.getElementById('result').innerText = `Persentase cinta antara ${name1} dan ${name2} adalah ${loveScore}%!`;
+        }
+    </script>
+</body>
+</html>
