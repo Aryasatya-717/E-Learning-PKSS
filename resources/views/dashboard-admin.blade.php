@@ -11,7 +11,7 @@
     <!-- Sidebar kiri -->
     <aside class="w-full md:w-64 bg-white p-4 space-y-8 shadow-md md:h-screen">
       <div class="text-center">
-        <img src="pkss/img/logo-1.png" alt="PKSS Logo" class="mx-auto w-[150px] mb-10">
+        <img src="/img/logo-1.png" alt="PKSS Logo" class="mx-auto w-[150px] mb-10">
         <h1 class="font-bold text-[#1d4ed8] text-xl"></h1>
         <p class="text-xs text-gray-500"></p>
       </div>
@@ -89,7 +89,7 @@
     <!-- Sidebar kanan -->
     <aside class="w-full md:w-64 p-4 space-y-4">
       <div class="text-center">
-        <img src="https://i.ibb.co/K9JXR95/joshua.jpg" alt="joshua" class="w-20 h-20 mx-auto rounded-full">
+        <img src="/img/pp.png" alt="joshua" class="w-20 h-20 mx-auto rounded-full">
         <p class="text-blue-600 font-semibold mt-1">joshua</p>
         <p class="text-sm text-gray-500">IT staff</p>
       </div>
