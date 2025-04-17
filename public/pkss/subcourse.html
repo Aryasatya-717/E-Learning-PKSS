@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subcourse - EduPanel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50">
+    <div class="flex h-screen">
+        <!-- Left Sidebar (Same as certificates.html) -->
+        <div class="w-64 bg-indigo-700 text-white p-6">
+            <div class="mb-8">
+                <h1 class="text-2xl font-bold">PKSS</h1>
+            </div>
+            <nav>
+                <a href="dashboard.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-indigo-800 mb-2">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="course.html" class="flex items-center space-x-3 p-3 rounded-lg bg-indigo-800 mb-2">
+                    <i class="fas fa-book"></i>
+                    <span>Course</span>
+                </a>
+                <a href="test.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-indigo-800 mb-2">
+                    <i class="fas fa-tasks"></i>
+                    <span>Test</span>
+                </a>
+                <a href="certificates.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-indigo-800 mb-2">
+                    <i class="fas fa-certificate"></i>
+                    <span>Certificates</span>
+                </a>
+                <a href="jadwal.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-indigo-800 mb-2">
+                    <i class="fas fa-calendar"></i>
+                    <span>Jadwal</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Middle Content (Subcourse List) -->
+        <div class="flex-1 p-8 overflow-y-auto">
+            <div class="mb-8">
+                <nav class="text-gray-600 mb-4">
+                    <a href="course.html" class="hover:underline">Course</a> > 
+                    <span class="font-semibold">Subcourse</span>
+                </nav>
+                <h2 class="text-3xl font-bold text-gray-800">Subcourse List</h2>
+                <p class="text-gray-600 mt-2">Select the subcourses you have studied</p>
+            </div>
+
+            <!-- Subcourse List -->
+            <div class="space-y-4">
+                <div class="flex justify-between items-center bg-white rounded-lg shadow-md p-4">
+                    <span class="text-lg">HTML Basics</span>
+                    <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600" />
+                </div>
+                <div class="flex justify-between items-center bg-white rounded-lg shadow-md p-4">
+                    <span class="text-lg">CSS Fundamentals</span>
+                    <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600" />
+                </div>
+                <div class="flex justify-between items-center bg-white rounded-lg shadow-md p-4">
+                    <span class="text-lg">JavaScript Essentials</span>
+                    <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600" />
+                </div>
+                <div class="flex justify-between items-center bg-white rounded-lg shadow-md p-4">
+                    <span class="text-lg">Responsive Design</span>
+                    <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600" />
+                </div>
+                <div class="flex justify-between items-center bg-white rounded-lg shadow-md p-4">
+                    <span class="text-lg">Web Accessibility</span>
+                    <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar (Profile Section) -->
+        <div class="w-80 bg-white p-6 border-l">
+            <!-- Profile Section -->
+            <div class="text-center mb-6">
+                <div class="w-24 h-24 rounded-full bg-gray-300 mx-auto mb-4 overflow-hidden">
+                    <img src="img/pp.png" alt="Profile" class="w-full h-full object-cover">
+                </div>
+                <h1>Joshua</h1>
+                <p>IT division</p>
+                <button class="text-indigo-600 hover:text-indigo-700">
+                    <i class="fas fa-edit mr-2"></i>Edit Profile
+                </button>
+            </div>
+
+            <!-- Exam Reminders -->
+            <div>
+                <h3 class="font-semibold mb-4">Exam Reminders</h3>
+                <div class="space-y-4">
+                    <div class="bg-red-50 p-3 rounded-lg">
+                        <div class="flex items-center text-red-800 mb-2">
+                            <i class="fas fa-clock mr-2"></i>
+                            <span class="font-medium">Today</span>
+                        </div>
+                        <p class="text-sm">Mathematics Final Exam</p>
+                        <p class="text-xs text-red-600 mt-1">09:00 AM - 11:00 AM</p>
+                    </div>
+                    <div class="bg-gray-50 p-3 rounded-lg">
+                        <div class="flex items-center text-gray-800 mb-2">
+                            <i class="fas fa-clock mr-2"></i>
+                            <span class="font-medium">Tomorrow</span>
+                        </div>
+                        <p class="text-sm">Physics Mid-term</p>
+                        <p class="text-xs text-gray-600 mt-1">02:00 PM - 04:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
