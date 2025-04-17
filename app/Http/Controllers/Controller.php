@@ -7,4 +7,8 @@ abstract class Controller
     function Login() {
         
     }
+
+    function logout(){
+
+    }
 }
