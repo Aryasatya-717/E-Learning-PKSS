@@ -42,7 +42,7 @@
     <!-- Main Content -->
     <main class="content">
       <div>
-        <p class="text-lg font-medium text-blue-600">Selamat Pagi, <span class="font-bold">joshua</span></p>
+        <p class="text-lg font-medium text-blue-600">Selamat Pagi, <span class="font-bold">{{ Auth::user()->name }}</span></p>
         <p class="text-sm text-gray-500 mb-2">don’t miss your examination today!</p>
         <div class="text-center my-4">
           <p class="text-md text-black font-semibold">Live Watch</p>
@@ -100,7 +100,7 @@
         <img src="/pkss/img/pp.png" alt="Profile" class="w-full h-full object-cover">
       </div>
       <h1>Dinda</h1>
-      <p>Admin</p>
+      <p>{{ Auth::user()->role }}</p>
       
     </div>
     <div>

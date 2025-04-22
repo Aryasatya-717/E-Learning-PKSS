@@ -17,6 +17,8 @@ Route::middleware('web')->group(function () {
         Route::get('/user/dashboard', [DashBoardController::class, 'user'])->middleware(CheckRole::class . ':user');
         Route::get('/ujian-user', [DashBoardController::class, 'ujianUser'])->name('ujian.user');
         Route::get('/dashboard-user', [DashBoardController::class, 'user'])->name('dashboard.user');
+        Route::get('/ujian-user-materi', function () { return view('ujian-user-materi'); })->name('ujian.materi');
+        
     });
     
     

@@ -71,7 +71,7 @@
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Data Science</h3>
                     <p class="text-gray-600 mb-4">Master data analysis, machine learning, and statistical modeling.</p>
-                    <a href="test-2.html" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
+                    <a href="{{ route('ujian.materi') }}" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
                         <i class="fas fa-arrow-right"></i>
                         <span>Begin</span>
                     </a>

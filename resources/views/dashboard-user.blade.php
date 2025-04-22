@@ -41,7 +41,7 @@
     <!-- Main Content -->
     <main class="content">
       <div>
-        <p class="text-lg font-medium text-blue-600">Selamat Pagi, <span class="font-bold">joshua</span></p>
+        <p class="text-lg font-medium text-blue-600">Selamat Pagi, <span class="font-bold">{{ Auth::user()->name }}</span></p>
         <p class="text-sm text-gray-500 mb-2">don’t miss your examination today!</p>
         <div class="text-center my-4">
           <p class="text-md text-black font-semibold">Live Watch</p>
@@ -98,15 +98,16 @@
       <div class="profile-img w-24 h-24 mx-auto rounded-full overflow-hidden mb-4">
         <img src="/pkss/img/pp.png" alt="Profile" class="w-full h-full object-cover">
       </div>
-      <h1>Joshua</h1>
-      <p>IT division</p>
+      <h1>{{ Auth::user()->name }}</h1>
+      <p>{{ Auth::user()->role }}</p>
       
     </div>
-    <div>
-      <a href="{{ route ('logout') }}">
+    <div class="mb-6">
+      <a href="{{ route('logout') }}">
         <button class="w-full bg-red-500 text-white py-2 rounded-xl font-semibold">Log out</button>
       </a>
     </div>
+    
     <div class="bg-white rounded-lg shadow p-4">
       <div class="flex justify-between items-center mb-4">
         <button onclick="prevMonth()" class="text-blue-500">&lt;</button>
