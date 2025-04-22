@@ -13,4 +13,8 @@ class DashBoardController extends Controller
     public function user() {
         return view ('dashboard-user');
     }
+
+    public function ujianUser() {
+        return view('ujian-user');
+    }
 }

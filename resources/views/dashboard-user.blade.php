@@ -7,84 +7,84 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="style.css">
+  <link href="{{ asset('pkss/style.css') }}" rel="stylesheet">
 </head>
 <body class="bg-gray-50 font-inter">
-  <div class="min-h-screen flex flex-col md:flex-row">
+  <div class="main-container">
     <!-- Sidebar -->
-    <aside class="w-full md:w-64 bg-indigo-700 text-white p-6">
-      <div class="mb-8">
-        <img class="h-12" src="img/logo-1.png" alt="Logo"/>
+    <aside class="w-full md:w-64 bg-white p-4 space-y-8 shadow-md md:h-screen">
+      <div class="text-center">
+        
+          <img class="w-full h-full object-contain" src="/pkss/img/logo-1.png" alt="Logo" />
+        
       </div>
-      <nav class="space-y-2">
-        <a href="dashboard.html" class="flex items-center space-x-3 p-3 rounded-lg bg-indigo-800">
-          <i class="fas fa-th-large"></i><span>Dashboard</span>
+      <nav class="space-y-4">
+        <a href="#" class="flex items-center space-x-2 text-[#1d4ed8] font-medium">
+          <div class="w-10 h-10 bg-[#1d4ed8] text-white rounded grid place-items-center">🏠</div>
+          <span>Dashboard</span>
         </a>
-        <a href="course.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-indigo-800">
-          <i class="fas fa-book"></i><span>Course</span>
+        <a href="{{ route('ujian.user') }}"class="flex items-center space-x-2 text-gray-600">
+          <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">📘</div>
+          <span>Ujian</span>
         </a>
-        <a href="test.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-indigo-800">
-          <i class="fas fa-tasks"></i><span>Test</span>
+        <a href="#" class="flex items-center space-x-2 text-gray-600">
+          <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">📜</div>
+          <span>Sertifikat</span>
         </a>
-        <a href="certificate.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-indigo-800">
-          <i class="fas fa-certificate"></i><span>Certificates</span>
-        </a>
-        <a href="schedule.html" class="flex items-center space-x-3 p-3 rounded-lg hover:bg-indigo-800">
-          <i class="fas fa-calendar"></i><span>Schedule</span>
+        <a href="#" class="flex items-center space-x-2 text-gray-600">
+          <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">📆</div>
+          <span>Jadwal</span>
         </a>
       </nav>
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 p-6 space-y-6">
-      <section>
-        <h2 class="text-2xl md:text-3xl font-bold text-gray-800">Selamat Pagi, Joshua</h2>
-        <div class="flex items-center mt-4 text-yellow-600">
-          <i class="fas fa-exclamation-triangle mr-2"></i>
-          <p>Don't miss your examination today!</p>
+    <main class="content">
+      <div>
+        <p class="text-lg font-medium text-blue-600">Selamat Pagi, <span class="font-bold">joshua</span></p>
+        <p class="text-sm text-gray-500 mb-2">don’t miss your examination today!</p>
+        <div class="text-center my-4">
+          <p class="text-md text-black font-semibold">Live Watch</p>
+          <div id="clock" class="text-5xl font-semibold tracking-widest">00 : 00 : 00</div>
+          <div id="date" class="text-md mt-2">Hari, DD Bulan YYYY</div>
         </div>
-        <div class="mt-4 text-gray-600">
-          <span id="live-time" class="text-xl font-semibold">00:00:00</span>
+      </div>
+
+      <div> 
+      <section class="grid grid-cols-3 gap-6 mb-8">
+        <div class="bg-white p-6 rounded-xl shadow-sm card-hover text-center">
+          <div class="text-3xl mb-1">📘</div>
+          <h3 class="font-semibold text-lg">Ujian</h3>
+          <p class="text-gray-600 mt-2">Mulai Ujian</p>
         </div>
-        <div class="mt-2 text-gray-600">
-          <span id="live-date">Loading date</span>
+        <div class="bg-white p-6 rounded-xl shadow-sm card-hover text-center">
+          <div class="text-3xl mb-1">📆</div>
+          <h3 class="font-semibold text-lg">Jadwal</h3>
+          <p class="text-gray-600 mt-2">Cek Jadwal Ujian</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm card-hover text-center">
+          <div class="text-3xl mb-1">📜</div>
+          <h3 class="font-semibold text-lg">Sertifikat</h3>
+          <p class="text-gray-600 mt-2">Lihat Pencapaian</p>
         </div>
       </section>
-
-      <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-xl shadow-sm card-hover text-center">
-          <i class="fas fa-book text-indigo-600 text-5xl mb-4"></i>
-          <h3 class="font-semibold text-lg">Course</h3>
-          <p class="text-gray-600 mt-2">Access your courses</p>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm card-hover text-center">
-          <i class="fas fa-tasks text-indigo-600 text-5xl mb-4"></i>
-          <h3 class="font-semibold text-lg">Test</h3>
-          <p class="text-gray-600 mt-2">View upcoming tests</p>
-        </div>
-        <div class="bg-white p-6 rounded-xl shadow-sm card-hover text-center">
-          <i class="fas fa-certificate text-indigo-600 text-5xl mb-4"></i>
-          <h3 class="font-semibold text-lg">Certificate</h3>
-          <p class="text-gray-600 mt-2">Your achievements</p>
-        </div>
-      </section>
-
+      </div>  
       <section class="bg-white rounded-xl shadow-sm p-6">
         <h3 class="text-xl font-semibold mb-4">Announcements</h3>
         <div class="space-y-4">
           <div class="border-b pb-4">
-            <h4 class="font-medium">Mid-term Examination Schedule</h4>
-            <p class="text-gray-600 mt-1">The mid-term examinations will begin next week...</p>
+            <h4 class="font-medium">Ujian Kedisplinan Karyawan</h4>
+            <p class="text-gray-600 mt-1">Ujian Kedisplinan Karyawan Telah Ditambahkan....</p>
             <span class="text-sm text-gray-500 mt-2 block">2 hours ago</span>
           </div>
           <div class="border-b pb-4">
-            <h4 class="font-medium">New Course Available</h4>
-            <p class="text-gray-600 mt-1">Check out our new course on Web Development...</p>
+            <h4 class="font-medium">>Ujian Komunikasi Aktif</h4>
+            <p class="text-gray-600 mt-1">Kamu telah selesai Mengerjakan Ujian...</p>
             <span class="text-sm text-gray-500 mt-2 block">1 day ago</span>
           </div>
           <div>
-            <h4 class="font-medium">Holiday Notice</h4>
-            <p class="text-gray-600 mt-1">The campus will be closed for Independence Day...</p>
+            <h4 class="font-medium">Ujian SOP Satpam</h4>
+            <p class="text-gray-600 mt-1">Ujian SOP Satpam akan berakhir pada...</p>
             <span class="text-sm text-gray-500 mt-2 block">2 days ago</span>
           </div>
         </div>
@@ -92,50 +92,67 @@
     </main>
 
     <!-- Right Sidebar -->
-    <aside class="w-full md:w-64 bg-white p-6 border-t md:border-t-0 md:border-l">
-      <div class="text-center mb-10">
-        <div class="w-24 h-24 mx-auto rounded-full overflow-hidden mb-4">
-          <img src="img/pp.png" alt="Profile" class="w-full h-full object-cover">
-        </div>
-        <h1 class="text-lg font-semibold">Joshua</h1>
-        <p class="text-sm text-gray-500">IT division</p>
-        <button class="mt-2 text-indigo-600 hover:text-indigo-700">
-          <i class="fas fa-edit mr-2"></i>Edit Profile
-        </button>
+<aside class="right-sidebar">
+    <div class="text-center mb-10">
+      <!-- Profile Image -->
+      <div class="profile-img w-24 h-24 mx-auto rounded-full overflow-hidden mb-4">
+        <img src="/pkss/img/pp.png" alt="Profile" class="w-full h-full object-cover">
       </div>
+      <h1>Joshua</h1>
+      <p>IT division</p>
+      
+    </div>
+    <div>
+      <a href="{{ route ('logout') }}">
+        <button class="w-full bg-red-500 text-white py-2 rounded-xl font-semibold">Log out</button>
+      </a>
+    </div>
+    <div class="bg-white rounded-lg shadow p-4">
+      <div class="flex justify-between items-center mb-4">
+        <button onclick="prevMonth()" class="text-blue-500">&lt;</button>
+        <h2 id="calendar-title" class="font-semibold text-lg">Maret 2025</h2>
+        <button onclick="nextMonth()" class="text-blue-500">&gt;</button>
+      </div>
+      <div class="grid grid-cols-7 gap-2 text-center text-sm font-semibold text-gray-600">
+        <div>S</div><div>S</div><div>S</div><div>R</div><div>K</div><div>J</div><div>S</div>
+      </div>
+      <div id="calendar-days" class="grid grid-cols-7 gap-2 mt-2 text-center text-sm text-gray-800"></div>
+    </div>
 
-      <div>
-        <h3 class="font-semibold mb-4">Exam Reminders</h3>
-        <div class="space-y-4">
-          <div class="bg-red-50 p-3 rounded-lg">
-            <div class="flex items-center text-red-800 mb-2">
-              <i class="fas fa-clock mr-2"></i><span class="font-medium">Today</span>
-            </div>
-            <p class="text-sm">Mathematics Final Exam</p>
-            <p class="text-xs text-red-600 mt-1">09:00 AM - 11:00 AM</p>
+    
+  
+    <!-- Exam Reminders -->
+    <div>
+      <h3 class="font-semibold mb-4">Exam Reminders</h3>
+      <div class="space-y-4">
+        <div class="bg-red-50 p-3 rounded-lg">
+          <div class="flex items-center text-red-800 mb-2">
+            <i class="fas fa-clock mr-2"></i><span class="font-medium">Today</span>
           </div>
-          <div class="bg-gray-50 p-3 rounded-lg">
-            <div class="flex items-center text-gray-800 mb-2">
-              <i class="fas fa-clock mr-2"></i><span class="font-medium">Tomorrow</span>
-            </div>
-            <p class="text-sm">Physics Mid-term</p>
-            <p class="text-xs text-gray-600 mt-1">02:00 PM - 04:00 PM</p>
+          <p class="text-sm">Mathematics Final Exam</p>
+          <p class="text-xs text-red-600 mt-1">09:00 AM - 11:00 AM</p>
+        </div>
+        <div class="bg-gray-50 p-3 rounded-lg">
+          <div class="flex items-center text-gray-800 mb-2">
+            <i class="fas fa-clock mr-2"></i><span class="font-medium">Tomorrow</span>
           </div>
+          <p class="text-sm">Physics Mid-term</p>
+          <p class="text-xs text-gray-600 mt-1">02:00 PM - 04:00 PM</p>
         </div>
       </div>
-    </aside>
-  </div>
+    </div>
+  </aside>
 
-  <script>
-    function updateDateTime() {
-      const now = new Date();
-      document.getElementById('live-time').textContent = now.toLocaleTimeString();
-      document.getElementById('live-date').textContent = now.toLocaleDateString('id-ID', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-      });
-    }
-    setInterval(updateDateTime, 1000);
-    updateDateTime();
-  </script>
+<!-- Clock Script -->
+<script src="/pkss/main.js"></script>
+
+<!-- Calendar Script -->
+<script src="/pkss/main.js"></script>
+
+  
+    
+
+  
+  
 </body>
 </html>
