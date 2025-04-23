@@ -12,36 +12,12 @@
 <body class="bg-gray-50 font-inter">
   <div class="main-container">
     <!-- Sidebar -->
-    <aside class="w-full md:w-64 bg-white p-4 space-y-8 shadow-md md:h-screen">
-      <div class="text-center">
-        
-          <img class="w-full h-full object-contain" src="/pkss/img/logo-1.png" alt="Logo" />
-        
-      </div>
-      <nav class="space-y-4">
-        <a href="#" class="flex items-center space-x-2 text-[#1d4ed8] font-medium">
-          <div class="w-10 h-10 bg-[#1d4ed8] text-white rounded grid place-items-center">🏠</div>
-          <span>Dashboard</span>
-        </a>
-        <a href="{{ route('ujian.user') }}"class="flex items-center space-x-2 text-gray-600">
-          <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">📘</div>
-          <span>Ujian</span>
-        </a>
-        <a href="#" class="flex items-center space-x-2 text-gray-600">
-          <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">📜</div>
-          <span>Sertifikat</span>
-        </a>
-        <a href="#" class="flex items-center space-x-2 text-gray-600">
-          <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">📆</div>
-          <span>Jadwal</span>
-        </a>
-      </nav>
-    </aside>
+    @include('sidebar-kiri-user')
 
     <!-- Main Content -->
     <main class="content">
       <div>
-        <p class="text-lg font-medium text-blue-600">Selamat Pagi, <span class="font-bold">joshua</span></p>
+        <p class="text-lg font-medium text-blue-600">Selamat Pagi, <span class="font-bold">{{ Auth::user()->name }}</span></p>
         <p class="text-sm text-gray-500 mb-2">don’t miss your examination today!</p>
         <div class="text-center my-4">
           <p class="text-md text-black font-semibold">Live Watch</p>
@@ -92,56 +68,9 @@
     </main>
 
     <!-- Right Sidebar -->
-<aside class="right-sidebar">
-    <div class="text-center mb-10">
-      <!-- Profile Image -->
-      <div class="profile-img w-24 h-24 mx-auto rounded-full overflow-hidden mb-4">
-        <img src="/pkss/img/pp.png" alt="Profile" class="w-full h-full object-cover">
-      </div>
-      <h1>Joshua</h1>
-      <p>IT division</p>
-      
-    </div>
-    <div>
-      <a href="{{ route ('logout') }}">
-        <button class="w-full bg-red-500 text-white py-2 rounded-xl font-semibold">Log out</button>
-      </a>
-    </div>
-    <div class="bg-white rounded-lg shadow p-4">
-      <div class="flex justify-between items-center mb-4">
-        <button onclick="prevMonth()" class="text-blue-500">&lt;</button>
-        <h2 id="calendar-title" class="font-semibold text-lg">Maret 2025</h2>
-        <button onclick="nextMonth()" class="text-blue-500">&gt;</button>
-      </div>
-      <div class="grid grid-cols-7 gap-2 text-center text-sm font-semibold text-gray-600">
-        <div>S</div><div>S</div><div>S</div><div>R</div><div>K</div><div>J</div><div>S</div>
-      </div>
-      <div id="calendar-days" class="grid grid-cols-7 gap-2 mt-2 text-center text-sm text-gray-800"></div>
-    </div>
 
-    
-  
-    <!-- Exam Reminders -->
-    <div>
-      <h3 class="font-semibold mb-4">Exam Reminders</h3>
-      <div class="space-y-4">
-        <div class="bg-red-50 p-3 rounded-lg">
-          <div class="flex items-center text-red-800 mb-2">
-            <i class="fas fa-clock mr-2"></i><span class="font-medium">Today</span>
-          </div>
-          <p class="text-sm">Mathematics Final Exam</p>
-          <p class="text-xs text-red-600 mt-1">09:00 AM - 11:00 AM</p>
-        </div>
-        <div class="bg-gray-50 p-3 rounded-lg">
-          <div class="flex items-center text-gray-800 mb-2">
-            <i class="fas fa-clock mr-2"></i><span class="font-medium">Tomorrow</span>
-          </div>
-          <p class="text-sm">Physics Mid-term</p>
-          <p class="text-xs text-gray-600 mt-1">02:00 PM - 04:00 PM</p>
-        </div>
-      </div>
-    </div>
-  </aside>
+@include('sidebar-kanan-user')
+
 
 <!-- Clock Script -->
 <script src="/pkss/main.js"></script>
