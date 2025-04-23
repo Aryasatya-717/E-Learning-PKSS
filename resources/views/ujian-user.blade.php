@@ -12,31 +12,7 @@
 <body class="bg-gray-50">
     <div class="flex h-screen">
         <!-- Left Sidebar (Same as index.html) -->
-        <aside class="w-full md:w-64 bg-white p-4 space-y-8 shadow-md md:h-screen">
-            <div class="text-center">
-              
-                <img class="w-full h-full object-contain" src="/pkss/img/logo-1.png" alt="Logo" />
-              
-            </div>
-            <nav class="space-y-4">
-              <a href="{{ route('dashboard.user') }}" class="flex items-center space-x-2 text-gray-600">
-                <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">🏠</div>
-                <span>Dashboard</span>
-              </a>
-              <a href="#" class="flex items-center space-x-2 text-[#1d4ed8] font-medium">
-                <div class="w-10 h-10 bg-[#1d4ed8] text-white rounded grid place-items-center">📘</div>
-                <span>Ujian</span>
-              </a>
-              <a href="#" class="flex items-center space-x-2 text-gray-600">
-                <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">📜</div>
-                <span>Sertifikat</span>
-              </a>
-              <a href="#" class="flex items-center space-x-2 text-gray-600">
-                <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">📆</div>
-                <span>Jadwal</span>
-              </a>
-            </nav>
-          </aside>
+        @include('sidebar-kiri-user')
 
         <!-- Middle Content (Course Categories) -->
         <div class="flex-1 p-8 overflow-y-auto">
@@ -55,8 +31,8 @@
                              class="w-full h-full object-cover">
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Web Development</h3>
-                    <p class="text-gray-600 mb-4">belajar cara mendevelopment website dengan framework laravel 11</p>
-                    <a href="test-2.html" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
+                    <p class="text-gray-600 mb-4">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem ratione atque culpa rerum, molestiae reiciendis et aperiam delectus iure ea tenetur corrupti consequatur ipsam iusto eligendi, iste explicabo pariatur reprehenderit!</p>
+                    <a href="{{ route('ujian.materi') }}" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
                         <i class="fas fa-arrow-right"></i>
                         <span>Begin</span>
                     </a>
@@ -71,7 +47,7 @@
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Data Science</h3>
                     <p class="text-gray-600 mb-4">Master data analysis, machine learning, and statistical modeling.</p>
-                    <a href="{{ route('ujian.materi') }}" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
+                    <a href="" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2">
                         <i class="fas fa-arrow-right"></i>
                         <span>Begin</span>
                     </a>
@@ -140,43 +116,13 @@
         </div>
 
         <!-- Right Sidebar (Same as index.html) -->
-        <aside class="right-sidebar">
-            <div class="text-center mb-10">
-              <!-- Profile Image -->
-              <div class="profile-img w-24 h-24 mx-auto rounded-full overflow-hidden mb-4">
-                <img src="/pkss/img/pp.png" alt="Profile" class="w-full h-full object-cover">
-              </div>
-              <h1>Joshua</h1>
-              <p>IT division</p>
-             
-            </div>
-            <div class="mb-6">
-              <a href="{{ route ('logout') }}">
-                <button class="w-full bg-red-500 text-white py-2 rounded-xl font-semibold">Log out</button>
-              </a>
-            </div>
-            
-            <!-- Exam Reminders -->
-            <div>
-              <h3 class="font-semibold mb-4">Exam Reminders</h3>
-              <div class="space-y-4">
-                <div class="bg-red-50 p-3 rounded-lg">
-                  <div class="flex items-center text-red-800 mb-2">
-                    <i class="fas fa-clock mr-2"></i><span class="font-medium">Today</span>
-                  </div>
-                  <p class="text-sm">Mathematics Final Exam</p>
-                  <p class="text-xs text-red-600 mt-1">09:00 AM - 11:00 AM</p>
-                </div>
-                <div class="bg-gray-50 p-3 rounded-lg">
-                  <div class="flex items-center text-gray-800 mb-2">
-                    <i class="fas fa-clock mr-2"></i><span class="font-medium">Tomorrow</span>
-                  </div>
-                  <p class="text-sm">Physics Mid-term</p>
-                  <p class="text-xs text-gray-600 mt-1">02:00 PM - 04:00 PM</p>
-                </div>
-              </div>
-            </div>
-          </aside>
+        @include('sidebar-kanan-user')
+
+        <!-- Clock Script -->
+        <script src="/pkss/main.js"></script>
+
+        <!-- Calendar Script -->
+        <script src="/pkss/main.js"></script>
 
     
 </body>

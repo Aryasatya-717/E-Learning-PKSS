@@ -11,32 +11,6 @@
 </head>
 <body class="bg-gray-50">
     <div class="flex h-screen">
-        <!-- Left Sidebar (Same as index.html) -->
-        <aside class="w-full md:w-64 bg-white px-4 pt-4 pb-6 space-y-8 shadow-md md:h-screen">
-          <div class="w-40 h-20 object-contain mx-auto mb-0">
-            <img class="w-full h-full object-contain" src="/pkss/img/logo-1.png" alt="Logo" />
-          </div>
-          <nav class="space-y-4 mt-0">
-            <a href="{{ route('dashboard.user') }}" class="flex items-center space-x-2 text-gray-600">
-              <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">🏠</div>
-              <span>Dashboard</span>
-            </a>
-            <a href="" class="flex items-center space-x-2 text-[#1d4ed8] font-medium">
-              <div class="w-10 h-10 bg-[#1d4ed8] text-white rounded grid place-items-center">📘</div>
-              <span>Ujian</span>
-            </a>
-            <a href="#" class="flex items-center space-x-2 text-gray-600">
-              <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">📜</div>
-              <span>Sertifikat</span>
-            </a>
-            <a href="#" class="flex items-center space-x-2 text-gray-600">
-              <div class="w-10 h-10 bg-gray-200 rounded grid place-items-center">📆</div>
-              <span>Jadwal</span>
-            </a>
-          </nav>
-        </aside>
-        
-        
 
         <!-- Middle Content (Course Categories) -->
         
@@ -72,7 +46,6 @@
                     
                     
               </div>
-              <a href="{{ route('ujian.user.test') }}" class="inline-flex item-center text-indigo-600 hover:underline mb-6 font-bold text-lg">mulai ujian </a>
 
                
 
