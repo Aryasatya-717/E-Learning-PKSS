@@ -68,3 +68,8 @@ function updateClock() {
       alert("Silakan isi NIK dan Password terlebih dahulu.");
     }
   }
+
+
+// jawaban soal
+// Data options (bisa dari API/database nanti)
+

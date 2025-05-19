@@ -7,20 +7,30 @@ use Illuminate\Http\Request;
 class DashBoardController extends Controller
 {
     public function admin() {
-        return view ('dashboard-admin');
+        return view ('/admin/dashboard');
     }
 
     public function user() {
-        return view ('dashboard-user');
+        return view('user.dashboard');
+    }
+    
+    public function ujianUser() {
+        return view('user.ujian');
+    }
+    
+    public function sertifikat() {
+        return view('user.sertifikat');
+    }
+    
+    public function jadwal() {
+        return view('user.jadwal');
+    }
+    
+    public function ujianUserTest() {
+        return view('user.ujian-test');
     }
 
-    public function ujianUser() {
-        return view('ujian-user');
-    }
-    public function materi() {
-        return view('ujian-user-materi');
-    }
-    public function ujianUserTest() {
-        return view('ujian-user-test');
-    }
+    //public function uploadMateri(){
+      //  return view('admin.Materi');
+    //}
 }

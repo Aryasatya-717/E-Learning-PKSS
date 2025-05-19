@@ -1,0 +1,36 @@
+.file-progress {
+  height: 4px;
+  background-color: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.file-progress-bar {
+  height: 100%;
+  background-color: #3b82f6;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.file-item {
+  transition: all 0.3s ease;
+}
+
+.file-item:hover {
+  background-color: #f9fafb;
+}
+
+.drag-over {
+  border-color: #3b82f6 !important;
+  background-color: #eff6ff !important;
+}
+
+/* Animation for spinner */
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
