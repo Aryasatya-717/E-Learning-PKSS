@@ -45,3 +45,28 @@
     }
   }
   
+
+  
+        /* Custom styles */
+        .question-btn {
+            transition: all 0.2s ease;
+        }
+        .question-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .question-btn.active {
+            background-color: #3B82F6;
+            color: white;
+        }
+        .question-btn.answered {
+            background-color: #10B981;
+            color: white;
+        }
+        .nav-btn {
+            transition: all 0.2s ease;
+        }
+        .nav-btn:hover {
+            color: #3B82F6;
+        }
+   
