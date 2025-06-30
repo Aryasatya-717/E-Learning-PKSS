@@ -29,7 +29,6 @@
                     <th class="px-6 py-3 text-left">Deskripsi</th>
                     <th class="px-6 py-3 text-left">Batas Waktu</th>
                     <th class="px-6 py-3 text-left">Durasi</th>
-                    <th class="px-6 py-3 text-left">Jumlah Soal</th>
                     <th class="px-6 py-3 text-left">Aksi</th>
                 </tr>
             </thead>
@@ -37,11 +36,10 @@
                 @forelse($ujians as $ujian)
                 <tr>
                     <td class="px-6 py-4">{{ $ujian->judul }}</td>
-                    <td class="px-6 py-4 capitalize">{{ $ujian->departemen }}</td>
+                    <td class="px-6 py-4 capitalize">{{ $ujian->departemen->nama ?? '-' }}</td>
                     <td class="px-6 py-4">{{ Str::limit($ujian->deskripsi, 50) }}</td>
                     <td class="px-6 py-4">{{ \Carbon\Carbon::parse($ujian->batas_waktu)->format('d M Y H:i') }}</td>
                     <td class="px-6 py-4">{{ $ujian->durasi }} menit</td>
-                    <td class="px-6 py-4">{{ $ujian->pertanyaan_count ?? 0 }}</td>
                     <td class="px-6 py-4 flex gap-2">
                         <a href="{{ route('ujian.edit', $ujian->id) }}" class="text-blue-500 hover:text-blue-700">
                           <i class="fas fa-edit"></i> Edit

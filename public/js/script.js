@@ -135,12 +135,10 @@ document.addEventListener('DOMContentLoaded', function() {
     if (newCorrectAnswer !== '') {
       correctAnswerInput.value = newCorrectAnswer;
     } else if (correctAnswerInput.value !== '') {
-      // Jika jawaban benar sebelumnya dihapus, reset
       correctAnswerInput.value = '';
     }
   }
 
-  // Fungsi submit form (tetap sama seperti sebelumnya)
   async function submitForm(e) {
     e.preventDefault();
     
@@ -179,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Fungsi validasi form (tetap sama seperti sebelumnya)
   function validateForm() {
     const getValue = (selector) => {
       const el = document.querySelector(selector);
@@ -188,12 +185,11 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     try {
-      // Validasi field utama
       const fields = [
         { selector: 'input[name="judul"]', message: 'Judul ujian harus diisi' },
         { selector: 'input[name="durasi"]', message: 'Durasi ujian harus diisi' },
         { selector: 'input[name="deadline"]', message: 'Batas waktu harus diisi' },
-        { selector: 'select[name="departemen"]', message: 'Departemen harus dipilih' }
+        { selector: 'select[name="departemen_id"]', message: 'Departemen harus dipilih' }
       ];
 
       fields.forEach(({ selector, message }) => {
@@ -232,13 +228,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Fungsi prepare form data (tetap sama seperti sebelumnya)
   function prepareFormData() {
     const formData = {
       judul: document.querySelector('input[name="judul"]').value,
       deskripsi: document.querySelector('textarea[name="deskripsi"]').value,
       batas_waktu: document.querySelector('input[name="deadline"]').value,
-      departemen: document.querySelector('select[name="departemen"]').value,
+      departemen_id: document.querySelector('select[name="departemen_id"]').value,
       durasi: document.querySelector('input[name="durasi"]').value,
       pertanyaan: []
     };
@@ -266,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function() {
     return formData;
   }
 
-  // Fungsi show success modal (tetap sama seperti sebelumnya)
+ 
   function showSuccessModal() {
     document.getElementById('success-modal').classList.remove('hidden');
     
@@ -276,6 +271,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Tambahkan soal pertama saat halaman dimuat
   addNewQuestion();
 });

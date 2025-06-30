@@ -8,9 +8,12 @@
   </div>
 
   <div>
-    <a href="{{ route('logout') }}">
-      <button class="w-full bg-red-500 text-white py-2 rounded-xl font-semibold">Log out</button>
-    </a>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST">
+    @csrf
+      <button type="button" onclick="confirmLogout()" class="w-full bg-red-500 text-white py-2 rounded-xl font-semibold">
+        Log out
+      </button>
+    </form>
   </div>
 
   <div class="bg-white rounded-lg shadow p-4">

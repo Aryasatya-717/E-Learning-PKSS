@@ -39,9 +39,9 @@
   <div class="container mx-auto px-4 py-6">
     <!-- Back Navigation -->
     <nav class="mb-6">
-      <a href="{{ url('/admin/dashboard') }}" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+      <a href="{{ route('soal.index') }}" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
         <i class="fas fa-arrow-left mr-2"></i>
-        Kembali ke Dashboard
+        Kembali
       </a>
     </nav>
 
@@ -83,13 +83,11 @@
               
               <div>
                 <label class="block text-sm font-medium text-gray-700 mb-1">Departemen</label>
-                <select id="department" name="departemen" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                <select id="department_id" name="departemen_id" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
                   <option value="">Semua Departemen</option>
-                  <option value="IT">IT</option>
-                  <option value="HR">HR</option>
-                  <option value="Finance">Finance</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="Operations">Operations</option>
+                  @foreach ($departemens as $dept)
+                    <option value="{{ $dept->id }}">{{ $dept->nama }}</option>
+                  @endforeach
                 </select>
               </div>
             </div>

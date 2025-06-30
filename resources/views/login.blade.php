@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Project E-Learning</title>
+  <link rel="icon" type="image/png" href="/pkss/img/logo-transparent.png">
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-white-100 relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -19,6 +20,13 @@
     </div>
     <h1 class="text-xl sm:text-2xl font-bold text-center text-orange-500 mb-6">Welcome</h1>
 
+    @if(session('error'))
+      <div class="mb-4 text-sm text-red-600 bg-red-100 border border-red-300 rounded-lg p-3">
+        {{ session('error') }}
+      </div>
+    @endif
+
+
     <form action="{{ url('/login') }}" method="POST">
       @csrf 
       <div class="space-y-4">
@@ -30,10 +38,6 @@
         <div>
           <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
           <input type="password" id="password" placeholder="Masukkan Password" class="mt-1 block w-full rounded-lg border border-gray-300 px-4 py-2 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-500" name="password"/>
-        </div>
-  
-        <div class="text-right text-sm text-blue-600 hover:underline">
-          <a href="#">Lupa Password?</a>
         </div>
   
         <button onclick="login()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition text-sm sm:text-base">
