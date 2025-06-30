@@ -26,7 +26,7 @@
 
   <!-- Content -->
   <main class="max-w-6xl mx-auto mt-8 px-4 pb-8">
-    <a href="{{ url('/admin/admin/modul') }}" class="inline-flex items-center text-gray-600 hover:text-blue-600 transition-colors mb-6">
+    <a href="{{ route('modul.index') }}" class="inline-flex items-center text-gray-600 hover:text-blue-600 transition-colors mb-6">
       <i class="fas fa-arrow-left mr-2"></i>
       <span>Kembali</span>
     </a>
@@ -96,15 +96,11 @@
               <div>
                 <label for="departmentSelect" class="block text-sm font-medium text-gray-700 mb-1">Departemen*</label>
                 <div class="relative">
-                  <select id="departmentSelect" name="departemen" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-blue-600 appearance-none" required>
+                  <select id="departmentSelect" name="departemen_id" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-blue-600 appearance-none" required>
                     <option value="" disabled selected>Pilih Departemen</option>
-                    <option value="all">Semua Departemen</option>
-                    <option value="it">IT</option>
-                    <option value="hrd">HRD</option>
-                    <option value="security">Keamanan</option>
-                    <option value="finance">Keuangan</option>
-                    <option value="operations">Operasional</option>
-                    <option value="marketing">Pemasaran</option>
+                    @foreach($departemens as $departemen)
+                      <option value="{{ $departemen->id }}">{{ $departemen->nama }}</option>
+                    @endforeach
                   </select>
                   <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                     <i class="fas fa-chevron-down text-gray-400"></i>

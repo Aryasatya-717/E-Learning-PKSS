@@ -8,9 +8,12 @@ class Modul extends Model
 {
     protected $fillable = [
         'judul',
-        'departemen',
+        'departemen_id',
         'deskripsi',
         'file_path',
         'file_name',
     ];
+    public function departemen(){
+        return $this->belongsTo(Departemen::class);
+    }
 }

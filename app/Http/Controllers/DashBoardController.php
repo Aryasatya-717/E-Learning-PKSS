@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Ujian;
+use App\Models\HasilUjian;
+
 
 class DashBoardController extends Controller
 {
@@ -11,7 +15,16 @@ class DashBoardController extends Controller
     }
 
     public function user() {
-        return view('user.dashboard');
+        $user = Auth::user();
+
+        // Ambil semua ujian yang ditujukan ke departemen user atau semua departemen
+        $ujianSiap = Ujian::where(function ($query) use ($user) {
+            $query->where('departemen_id', $user->departemen_id)
+                ->orWhereNull('departemen_id') // jika ada ujian umum
+                ->orWhere('departemen_id', 'all'); // jika kamu pakai string 'all'
+        })->get();
+
+        return view('user.dashboard', compact('ujianSiap'));
     }
     
     public function ujianUser() {
@@ -30,7 +43,5 @@ class DashBoardController extends Controller
         return view('user.ujian-test');
     }
 
-    //public function uploadMateri(){
-      //  return view('admin.Materi');
-    //}
+
 }

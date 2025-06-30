@@ -35,14 +35,13 @@
                 @forelse($moduls as $modul)
                 <tr>
                     <td class="px-6 py-4">{{ $modul->judul }}</td>
-                    <td class="px-6 py-4 capitalize">{{ $modul->departemen }}</td>
+                    <td class="px-6 py-4 capitalize">{{ $modul->departemen->nama ?? '-' }}</td>
                     <td class="px-6 py-4">{{ Str::limit($modul->deskripsi, 50) }}</td>
+                    <td class="px-6 py-4">{{ $modul->file_name }}</td>
                     <td class="px-6 py-4">
-                        <a href="{{ asset('storage/' . $modul->file_path) }}" target="_blank" class="text-blue-600 hover:underline">
-                            {{ $modul->file_name }}
+                        <a href="{{ route('admin.modul.preview', $modul->id) }}" class="w-full text-center inline-block px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors">
+                            Lihat
                         </a>
-                    </td>
-                    <td class="px-6 py-4">
                         <form action="{{ route('modul.destroy', $modul->id) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus?')">
                             @csrf
                             @method('DELETE')

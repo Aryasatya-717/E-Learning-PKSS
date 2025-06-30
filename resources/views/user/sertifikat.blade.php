@@ -1,91 +1,226 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sertifikat Kelulusan - {{ Auth::user()->name }}</title>
 
-@section('content')
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&family=Yellowtail&display=swap" rel="stylesheet">
+    
     <style>
+        @page {
+            size: A4 landscape;
+            margin: 0; /* Menghilangkan margin dari halaman itu sendiri */
+        }
+
+        /* --- PERBAIKAN UTAMA DI SINI --- */
         @media print {
-            body * {
-                visibility: hidden !important; /* Pastikan semua elemen disembunyikan secara paksa */
+            /* Menghilangkan semua margin dan padding dari body saat mencetak */
+            body {
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important; /* Menghilangkan shadow juga */
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
-            .certificate-print-area,
-            .certificate-print-area * {
-                visibility: visible !important; /* Pastikan area sertifikat dan isinya terlihat paksa */
+            .no-print {
+                display: none;
             }
-            .certificate-print-area {
-                position: fixed !important; /* Penting agar menutupi seluruh halaman cetak */
-                top: 0 !important;
-                left: 0 !important;
-                width: 100% !important;
-                height: 100% !important;
-                display: flex !important; /* Gunakan flex untuk mengatur tata letak di tengah */
-                flex-direction: column !important;
-                justify-content: center !important; /* Pusatkan vertikal */
-                align-items: center !important; /* Pusatkan horizontal */
-                background-color: white !important; /* Pastikan latar belakang putih */
-                z-index: 9999 !important; /* Pastikan berada di atas elemen lain */
-            }
-
-            .certificate-print-area img {
-                max-width: 90% !important; /* Atur lebar maksimum gambar */
-                max-height: 80% !important; /* Atur tinggi maksimum gambar */
-            }
-
-            /* Sembunyikan elemen lain dengan lebih spesifik */
-            aside.w-full.md\:w-64.bg-white.p-4.space-y-8.shadow-md.md\:h-screen,
-            .right-sidebar,
-            body > *:not(main),
-            main > :not(.certificate-container), / Sembunyikan container utama sertifikat */
-            .certificate-container > :not(.certificate-print-area) / Sembunyikan elemen di dalam container selain area cetak */
-            {
-                display: none !important;
+            .certificate-container {
+                box-shadow: none;
             }
         }
 
-        /* Style untuk area sertifikat yang terlihat (di luar @media print) */
-        .certificate-container {
+        body {
+            font-family: 'EB Garamond', serif;
+            background-color: #e0e0e0;
+            margin: 0; /* Margin body sudah 0 */
+            padding: 20px; /* Padding ini HANYA untuk tampilan di layar */
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
         }
 
-        .certificate-print-area {
-            background-color: white;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            text-align: center;
+        .certificate-container {
+            width: 297mm;
+            height: 210mm;
+            background-color: #ffffff;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.15);
         }
 
-        .certificate-image {
-            max-width: 100%;
-            margin-bottom: 1rem;
-            border-radius: 0.25rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        /* ... Sisa CSS Anda tetap sama ... */
+        .certificate-border {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
 
-        .certificate-actions {
+        .certificate-content {
+            position: relative;
+            z-index: 2;
+            padding: 2.5cm 2cm;
+            height: 100%;
+            box-sizing: border-box;
             display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+            color: #0d233f;
+        }
+        
+        .certificate-header {
+            flex-shrink: 0;
+        }
+        .company-logo {
+            max-height: 80px;
+            margin-bottom: 20px;
+        }
+        .main-title {
+            font-family: 'EB Garamond', serif;
+            font-size: 34pt;
+            font-weight: 700;
+            color: #b98d4a;
+            margin: 0;
+        }
+        .subtitle {
+            font-size: 14pt;
+            margin-top: 5px;
+        }
+
+        .certificate-body {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
-            space-x: 1rem;
-            margin-top: 1rem;
+        }
+        .presented-to-text {
+            font-size: 12pt;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .recipient-name {
+            font-family: 'Yellowtail', cursive;
+            font-style: normal;
+            font-weight: normal; 
+            font-size: 54pt; 
+            color: #0d233f;
+            margin: 10px 0;
+            border-bottom: 2px solid #b98d4a;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .achievement-text {
+            font-size: 14pt;
+            margin: 20px auto 10px auto;
+            max-width: 80%;
+            line-height: 1.6;
+        }
+        .achievement-text strong {
+            font-family: 'EB Garamond', serif;
+            font-weight: 700;
+            font-size: 16pt;
+            color: #b98d4a;
+        }
+
+        .certificate-footer {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            width: 100%;
+            margin-top: 40px;
+            flex-shrink: 0;
+        }
+        .signature-block {
+            width: 40%;
+        }
+        .signature-line {
+            border-top: 1px solid #0d233f;
+            padding-top: 5px;
+            margin-bottom: 5px;
+        }
+        .signer-name {
+            font-weight: 700;
+            font-size: 12pt;
+        }
+        .signer-title {
+            font-size: 10pt;
+            font-style: italic;
+        }
+        .completion-date {
+            font-size: 11pt;
+            margin-top: 15px;
+        }
+
+        .print-button {
+            padding: 12px 25px;
+            font-size: 16px;
+            background-color: #b98d4a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .print-button:hover {
+            background-color: #8c6b3a;
         }
     </style>
-<body class="bg-gray-50 font-[Inter]">
-    <div class="flex h-screen">
-        <main class="flex-1 p-8 overflow-y-auto">
-            <div class="mb-8 text-center">
-                <h2 class="text-3xl font-bold text-gray-800"><strong>Sertifikat Anda</strong></h2>
-                <p class="text-gray-600 mt-2"><strong>Berikut adalah sertifikat yang telah Anda peroleh.</strong></p>
-            </div>
+</head>
+<body>
 
-            <div class="certificate-container">
-                <div class="certificate-print-area">
-                    <img src="{{ url('/pkss/img/sertif.png') }}" alt="Sertifikat" class="mx-auto max-w-full mb-4 rounded shadow certificate-image">
-                </div>
-                <div class="certificate-actions">
-                    <a href="{{ url('/pkss/img/sertif.png') }}" download class="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700">Download</a>
-                </div>
-            </div>
-        </main>
+    <div class="certificate-container">
+        <img class="certificate-border" src="{{ asset('images/certificate-border.svg') }}" alt="Certificate Border">
+        
+        <div class="certificate-content">
+            
+            <header class="certificate-header">
+                <img src="/pkss/img/logo-1.png" alt="Logo Perusahaan" class="company-logo">
+                <h1 class="main-title">Certificate of Completion</h1>
+            </header>
+            
+            <main class="certificate-body">
+                <p class="presented-to-text">This Certificate is Proudly Presented To</p>
+                <h2 class="recipient-name">{{ Auth::user()->name }}</h2>
+                <p class="achievement-text">
+                    For successfully completing the examination of <br><strong>"{{ $ujian->judul }}"</strong>
+                </p>
+                <p class="completion-date">
+                    Completed on {{ \Carbon\Carbon::parse($hasil->created_at)->translatedFormat('d F Y') }}
+                </p>
+            </main>
 
-        @endsection
+            <footer class="certificate-footer">
+                <div class="signature-block">
+                    <div class="signature-line">
+                        <p class="signer-name">Jane Doe, S.Kom., M.M.</p>
+                        <p class="signer-title">Head of Training Department</p>
+                    </div>
+                </div>
+                <div class="signature-block">
+                    <div class="signature-line">
+                        <p class="signer-name">John Smith, S.E.</p>
+                        <p class="signer-title">General Manager</p>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+    </div>
+
+    <div class="no-print" style="margin-top: 20px;">
+        <button onclick="window.print()" class="print-button">
+            Cetak atau Simpan sebagai PDF
+        </button>
+    </div>
+
+</body>
+</html>

@@ -11,11 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    
     protected $fillable = [
         'name',
         'email',
@@ -45,4 +41,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function departemen(){
+        return $this->belongsTo(Departemen::class);
+    }
+
+    public function hasilUjian()
+    {
+        return $this->hasMany(HasilUjian::class);
+    }
+
 }

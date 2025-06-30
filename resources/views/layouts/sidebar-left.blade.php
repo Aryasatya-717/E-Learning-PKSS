@@ -37,7 +37,7 @@
           <span>Buat Ujian</span>
         </a>
 
-        <a href="#" 
+        <a href="{{ route('admin.nilai') }}" 
            class="flex items-center space-x-2 p-2 rounded-lg transition-colors
            {{ Request::routeIs('admin.karyawan*') ? 'bg-blue-50 text-[#1d4ed8]' : 'text-gray-600 hover:bg-gray-100' }}">
           <div class="w-10 h-10 rounded-lg grid place-items-center 
@@ -66,7 +66,7 @@
             {{ Request::routeIs('admin.course*') ? 'bg-[#1d4ed8] text-white' : 'bg-gray-200' }}">
             📘
           </div>
-          <span>download Materi</span>
+          <span>Materi</span>
         </a>
 
         <a href="{{ route('user.ujian.index') }}"
@@ -77,26 +77,6 @@
             📘
           </div>
           <span>Ujian</span>
-        </a>
-
-        <a href="{{ route('user.sertifikat') }}"
-           class="flex items-center space-x-2 p-2 rounded-lg transition-colors
-           {{ Request::routeIs('sertifikat') ? 'bg-blue-50 text-[#1d4ed8]' : 'text-gray-600 hover:bg-gray-100' }}">
-          <div class="w-10 h-10 rounded-lg grid place-items-center 
-            {{ Request::routeIs('sertifikat') ? 'bg-[#1d4ed8] text-white' : 'bg-gray-200' }}">
-            📜
-          </div>
-          <span>Sertifikat</span>
-        </a>
-
-        <a href="#"
-           class="flex items-center space-x-2 p-2 rounded-lg transition-colors
-           {{ Request::routeIs('jadwal') ? 'bg-blue-50 text-[#1d4ed8]' : 'text-gray-600 hover:bg-gray-100' }}">
-          <div class="w-10 h-10 rounded-lg grid place-items-center 
-            {{ Request::routeIs('jadwal') ? 'bg-[#1d4ed8] text-white' : 'bg-gray-200' }}">
-            📆
-          </div>
-          <span>Jadwal</span>
         </a>
       @endif
     @endauth

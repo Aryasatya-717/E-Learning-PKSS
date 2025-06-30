@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Elements
   const uploadBox = document.getElementById('uploadBox');
   const fileInput = document.getElementById('fileInput');
   const browseBtn = document.getElementById('browseBtn');
@@ -11,10 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
   const successModal = document.getElementById('successModal');
   const modalCloseBtn = document.getElementById('modalCloseBtn');
   
-  // Variables
   let currentFile = null;
 
-  // Event Listeners
   browseBtn.addEventListener('click', () => fileInput.click());
   fileInput.addEventListener('change', handleFileSelect);
   modalCloseBtn.addEventListener('click', () => successModal.classList.add('hidden'));
@@ -22,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.target === successModal) successModal.classList.add('hidden');
   });
 
-  // Drag and Drop Handlers
   uploadBox.addEventListener('dragover', (e) => {
     e.preventDefault();
     uploadBox.classList.add('drag-over');
@@ -41,8 +37,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // Form Submission Handler
-  // Di dalam event listener submit form
   uploadForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
@@ -52,7 +46,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     try {
-        // UI Feedback
         saveBtn.disabled = true;
         saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Menyimpan...';
         
@@ -73,10 +66,11 @@ document.addEventListener('DOMContentLoaded', function() {
             throw new Error(data.message || 'Upload gagal');
         }
 
-        // Tampilkan modal sukses
         successModal.classList.remove('hidden');
         resetForm();
-        
+        setTimeout(() => {
+          window.location.href = "/admin/admin/modul";
+        }, 1500);
     } catch (error) {
         console.error('Upload error:', error);
         alert(`Error: ${error.message}`);
@@ -86,12 +80,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-  // File Selection Handler
   function handleFileSelect(event) {
     const file = event.target.files[0];
     if (!file) return;
     
-    // File Validation
     const validTypes = [
       'application/pdf',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -113,15 +105,13 @@ document.addEventListener('DOMContentLoaded', function() {
     saveBtn.disabled = false;
   }
 
-  // Display File Info
   function displayFileInfo(file) {
     noFiles.classList.add('hidden');
     
     const fileItem = fileItemTemplate.cloneNode(true);
     fileItem.classList.remove('hidden');
     fileItem.id = '';
-    
-    // Set file info
+
     const fileName = fileItem.querySelector('.file-name');
     const fileSize = fileItem.querySelector('.file-size');
     const fileIcon = fileItem.querySelector('.fa-file-pdf');
