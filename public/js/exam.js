@@ -1,7 +1,7 @@
 let currentQuestion = 0;
 const answers = {};
 
-// Initialize question navigation
+// Initialize
 function initQuestionNavigation() {
     document.getElementById('total-questions').textContent = totalQuestions;
 }
@@ -23,15 +23,12 @@ function saveAnswer(questionId, answerKey) {
 }
 
 function updateQuestionButton(questionId) {
-    const questionButtons = document.querySelectorAll('.question-btn');
-    questionButtons.forEach(btn => {
-        const btnQuestionId = parseInt(btn.getAttribute('data-question-id'));
-        btn.classList.remove('answered');
-        if (btnQuestionId === questionId && answers[questionId] !== undefined) {
-            btn.classList.add('answered');
-        }
+    const buttons = document.querySelectorAll(`.question-btn[data-question-id="${questionId}"]`);
+    buttons.forEach(btn => {
+        btn.classList.add('answered'); // hijau kalau sudah dijawab
     });
 }
+
 
 function renderQuestion(index) {
     const q = questions[index];
@@ -41,36 +38,42 @@ function renderQuestion(index) {
     const optionsContainer = document.getElementById('options-container');
     optionsContainer.innerHTML = '';
 
-    const options = JSON.parse(q.opsi);
-    Object.entries(options).forEach(([key, value]) => {
+    const options = q.opsi_acak_baru;
+
+    Object.entries(options).forEach(([originalIndex, optionText]) => {
+        const isSelected = answers[q.id] === originalIndex;
+
         const div = document.createElement('div');
-        div.className = `option-item flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer
-                         ${answers[q.id] == key ? 'bg-blue-50 border-blue-300' : ''}`;
+        div.className = `option-item flex items-center p-4 border rounded-lg cursor-pointer transition-colors duration-200
+                         ${isSelected ? 'bg-blue-50 border-blue-400' : 'border-gray-200 hover:bg-gray-50'}`;
+
         div.onclick = function() {
-            const radio = this.querySelector('input[type="radio"]');
-            radio.checked = true;
-            saveAnswer(q.id, key);
             document.querySelectorAll('.option-item').forEach(item => {
-                item.classList.remove('bg-blue-50', 'border-blue-300');
+                item.classList.remove('bg-blue-50', 'border-blue-400');
+                item.querySelector('input[type="radio"]').checked = false;
             });
-            this.classList.add('bg-blue-50', 'border-blue-300');
+            this.classList.add('bg-blue-50', 'border-blue-400');
+            this.querySelector('input[type="radio"]').checked = true;
+            saveAnswer(q.id, originalIndex);
         };
+
         div.innerHTML = `
-            <input type="radio" name="current_option" id="soal${q.id}_${key}" 
-                value="${key}" ${answers[q.id] == key ? 'checked' : ''} 
-                class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300"
-                onchange="saveAnswer(${q.id}, ${key})">
-            <label for="soal${q.id}_${key}" class="ml-3 text-gray-700 cursor-pointer flex-1">
-                <span class="font-medium">${String.fromCharCode(65 + parseInt(key))}.</span> ${value}
+            <input type="radio" name="current_option_${q.id}"
+                   value="${originalIndex}" ${isSelected ? 'checked' : ''}
+                   class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 pointer-events-none">
+            <label class="ml-3 text-gray-700 cursor-pointer flex-1">
+                ${optionText}
             </label>
         `;
         optionsContainer.appendChild(div);
     });
 
-    document.querySelectorAll('.question-btn').forEach((btn, i) => {
-        btn.classList.remove('active');
-        if (i === index) btn.classList.add('active');
+   document.querySelectorAll('.question-btn').forEach(btn => {
+    btn.classList.remove('active');
     });
+    document.querySelectorAll(`.question-btn[data-question-id="${questions[index].id}"]`)
+    .forEach(btn => btn.classList.add('active'));
+
 
     document.getElementById('prevBtn').disabled = index === 0;
     document.getElementById('nextBtn').disabled = index === questions.length - 1;
@@ -98,36 +101,44 @@ function goToQuestion(index) {
     renderQuestion(currentQuestion);
 }
 
+// Timer
 let timeLeft = 0;
-
 document.addEventListener('DOMContentLoaded', function() {
     initQuestionNavigation();
     renderQuestion(currentQuestion);
 
     timeLeft = parseInt(document.getElementById('timer').dataset.timeleft);
+    const timerEl = document.getElementById('timer');
+
     const timer = setInterval(function () {
         timeLeft--;
         if (timeLeft <= 0) {
             clearInterval(timer);
+            alert("Waktu habis!");
             document.getElementById('examForm').submit();
         }
 
         const h = String(Math.floor(timeLeft / 3600)).padStart(2, '0');
         const m = String(Math.floor((timeLeft % 3600) / 60)).padStart(2, '0');
         const s = String(timeLeft % 60).padStart(2, '0');
-        document.getElementById('timer').textContent = `${h}:${m}:${s}`;
+        timerEl.textContent = `${h}:${m}:${s}`;
 
-        if (timeLeft <= 300) {
-            document.getElementById('timer').classList.add('text-red-600');
-            document.getElementById('timer').classList.remove('text-blue-600');
+        // warna dinamis
+        if (timeLeft <= 30) {
+            timerEl.className = "text-lg lg:text-xl font-mono font-bold text-red-600";
+        } else if (timeLeft <= 120) {
+            timerEl.className = "text-lg lg:text-xl font-mono font-bold text-orange-500";
+        } else {
+            timerEl.className = "text-lg lg:text-xl font-mono font-bold text-blue-600";
         }
     }, 1000);
 });
 
+// Warning belum dijawab
 function updateWarningMessage() {
     const answeredCount = Object.keys(answers).length;
     const unansweredCount = totalQuestions - answeredCount;
-    
+
     if (unansweredCount > 0) {
         document.getElementById('warning-message').classList.remove('hidden');
         document.getElementById('unanswered-count').textContent = unansweredCount;
@@ -136,6 +147,7 @@ function updateWarningMessage() {
     }
 }
 
+// Modal
 document.getElementById('examForm').addEventListener('submit', function(e) {
     e.preventDefault();
     showConfirmationModal();
@@ -155,11 +167,8 @@ function submitForm() {
     document.getElementById('examForm').submit();
 }
 
+// Navigasi keyboard
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowRight') {
-        nextQuestion();
-    } else if (e.key === 'ArrowLeft') {
-        prevQuestion();
-    }
+    if (e.key === 'ArrowRight') nextQuestion();
+    else if (e.key === 'ArrowLeft') prevQuestion();
 });
-

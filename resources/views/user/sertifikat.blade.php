@@ -1,226 +1,103 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sertifikat Kelulusan - {{ Auth::user()->name }}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sertifikat</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400;1,700&family=Yellowtail&display=swap" rel="stylesheet">
-    
-    <style>
-        @page {
-            size: A4 landscape;
-            margin: 0; /* Menghilangkan margin dari halaman itu sendiri */
-        }
-
-        /* --- PERBAIKAN UTAMA DI SINI --- */
-        @media print {
-            /* Menghilangkan semua margin dan padding dari body saat mencetak */
-            body {
-                margin: 0 !important;
-                padding: 0 !important;
-                box-shadow: none !important; /* Menghilangkan shadow juga */
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-            .no-print {
-                display: none;
-            }
-            .certificate-container {
-                box-shadow: none;
-            }
-        }
-
-        body {
-            font-family: 'EB Garamond', serif;
-            background-color: #e0e0e0;
-            margin: 0; /* Margin body sudah 0 */
-            padding: 20px; /* Padding ini HANYA untuk tampilan di layar */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .certificate-container {
-            width: 297mm;
-            height: 210mm;
-            background-color: #ffffff;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(0,0,0,0.15);
-        }
-
-        /* ... Sisa CSS Anda tetap sama ... */
-        .certificate-border {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .certificate-content {
-            position: relative;
-            z-index: 2;
-            padding: 2.5cm 2cm;
-            height: 100%;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: center;
-            color: #0d233f;
-        }
-        
-        .certificate-header {
-            flex-shrink: 0;
-        }
-        .company-logo {
-            max-height: 80px;
-            margin-bottom: 20px;
-        }
-        .main-title {
-            font-family: 'EB Garamond', serif;
-            font-size: 34pt;
-            font-weight: 700;
-            color: #b98d4a;
-            margin: 0;
-        }
-        .subtitle {
-            font-size: 14pt;
-            margin-top: 5px;
-        }
-
-        .certificate-body {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .presented-to-text {
-            font-size: 12pt;
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .recipient-name {
-            font-family: 'Yellowtail', cursive;
-            font-style: normal;
-            font-weight: normal; 
-            font-size: 54pt; 
-            color: #0d233f;
-            margin: 10px 0;
-            border-bottom: 2px solid #b98d4a;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
-        .achievement-text {
-            font-size: 14pt;
-            margin: 20px auto 10px auto;
-            max-width: 80%;
-            line-height: 1.6;
-        }
-        .achievement-text strong {
-            font-family: 'EB Garamond', serif;
-            font-weight: 700;
-            font-size: 16pt;
-            color: #b98d4a;
-        }
-
-        .certificate-footer {
-            display: flex;
-            justify-content: space-around;
-            align-items: flex-end;
-            width: 100%;
-            margin-top: 40px;
-            flex-shrink: 0;
-        }
-        .signature-block {
-            width: 40%;
-        }
-        .signature-line {
-            border-top: 1px solid #0d233f;
-            padding-top: 5px;
-            margin-bottom: 5px;
-        }
-        .signer-name {
-            font-weight: 700;
-            font-size: 12pt;
-        }
-        .signer-title {
-            font-size: 10pt;
-            font-style: italic;
-        }
-        .completion-date {
-            font-size: 11pt;
-            margin-top: 15px;
-        }
-
-        .print-button {
-            padding: 12px 25px;
-            font-size: 16px;
-            background-color: #b98d4a;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .print-button:hover {
-            background-color: #8c6b3a;
-        }
-    </style>
+  <!-- Font Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap" rel="stylesheet">
+  <style>
+    .font-protest {
+      font-family: 'Protest Riot', cursive;
+    }
+  </style>
 </head>
-<body>
+<body class="bg-gray-100 text-center p-5">
 
-    <div class="certificate-container">
-        <img class="certificate-border" src="{{ asset('images/certificate-border.svg') }}" alt="Certificate Border">
-        
-        <div class="certificate-content">
-            
-            <header class="certificate-header">
-                <img src="/pkss/img/logo-1.png" alt="Logo Perusahaan" class="company-logo">
-                <h1 class="main-title">Certificate of Completion</h1>
-            </header>
-            
-            <main class="certificate-body">
-                <p class="presented-to-text">This Certificate is Proudly Presented To</p>
-                <h2 class="recipient-name">{{ Auth::user()->name }}</h2>
-                <p class="achievement-text">
-                    For successfully completing the examination of <br><strong>"{{ $ujian->judul }}"</strong>
-                </p>
-                <p class="completion-date">
-                    Completed on {{ \Carbon\Carbon::parse($hasil->created_at)->translatedFormat('d F Y') }}
-                </p>
-            </main>
+<!-- Sertifikat -->
+<div id="sertifikat" 
+     class="relative w-[1123px] h-[794px] mx-auto bg-white shadow-lg overflow-hidden">
 
-            <footer class="certificate-footer">
-                <div class="signature-block">
-                    <div class="signature-line">
-                        <p class="signer-name">Jane Doe, S.Kom., M.M.</p>
-                        <p class="signer-title">Head of Training Department</p>
-                    </div>
-                </div>
-                <div class="signature-block">
-                    <div class="signature-line">
-                        <p class="signer-name">John Smith, S.E.</p>
-                        <p class="signer-title">General Manager</p>
-                    </div>
-                </div>
-            </footer>
+  <!-- Background -->
+  <img src="{{ asset('pkss/img/A4-7.png') }}" 
+       alt="Background Sertifikat" 
+       class="absolute inset-0 w-full h-full z-0">
 
-        </div>
+  <!-- Konten Sertifikat -->
+  <div class="absolute top-[200px] w-full text-center z-10">
+    <h1 class="font-protest text-[64px] font-bold text-gray-800">SERTIFIKAT</h1>
+  </div>
+
+  <div class="absolute top-[290px] w-full text-center z-10">
+    <p class="text-lg text-gray-700">Dengan ini diberikan kepada</p>
+  </div>
+
+  <div class="absolute top-[315px] w-full text-center z-10">
+    <p class="text-3xl font-bold text-black">{{ Auth::user()->name }}</p>
+  </div>
+
+  <div class="absolute top-[360px] w-full text-center z-10">
+    <p class="text-lg text-gray-700">Atas partisipasi dan pencapaian dalam mengikuti kegiatan</p>
+  </div>
+
+  <div class="absolute top-[400px] w-full text-center z-10">
+    <p class="text-xl font-bold text-gray-800">{{ $ujian->judul ?? 'E-Learning PKSS' }}</p>
+  </div>
+
+  <div class="absolute top-[450px] w-full text-center z-10">
+    <p class="text-lg text-gray-700">yang diselenggarakan oleh PT BAKTI AMANAH SEJAHTERA</p>
+  </div>
+
+  <div class="absolute top-[490px] w-full text-center z-10">
+    <p class="text-lg text-black">Tanggal: {{ $hasil->created_at ?? '...........' }}</p>
+  </div>
+
+  <!-- Tanda Tangan -->
+  <div class="absolute bottom-[150px] w-full flex justify-around z-10">
+    <!-- Signature 1 -->
+    <div class="w-[300px] text-center">
+      <img src="{{ asset('pkss/img/tanda-tangan-1.png') }}" 
+           alt="Tanda Tangan Ketua" 
+           class="h-16 mx-auto mb-2">
+      <p class="font-bold mt-1">{{ $event->penandatangan1 ?? 'Gading Widodo, S.Kom., M.M.' }}</p>
+      <p class="text-sm italic">Ketua</p>
+    </div>  
+
+    <!-- Signature 2 -->
+    <div class="w-[300px] text-center">
+      <img src="{{ asset('pkss/img/tanda-tangan-2.png') }}" 
+           alt="Tanda Tangan Sekretaris"
+           class="h-16 mx-auto mb-2">
+      <p class="font-bold mt-1">{{ $event->penandatangan2 ?? 'Erick ade, S.E.' }}</p>
+      <p class="text-sm italic">Sekretaris</p>
     </div>
+  </div>
+</div> <!-- 🚀 penutup sertifikat -->
 
-    <div class="no-print" style="margin-top: 20px;">
-        <button onclick="window.print()" class="print-button">
-            Cetak atau Simpan sebagai PDF
-        </button>
-    </div>
+<!-- Tombol Download -->
+<div class="text-center mt-8">
+  <button onclick="downloadPDF()" 
+          class="px-6 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700">
+    Download PDF
+  </button>
+</div>
+
+<script>
+  function downloadPDF() {
+    const element = document.getElementById('sertifikat');
+    const opt = {
+      margin: [0, 0, 0, 0],
+      filename: 'sertifikat-{{ Auth::user()->name }}.pdf',
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: { scale: 2, useCORS: true },
+      jsPDF: { unit: 'px', format: [1123, 794], orientation: 'landscape' }
+    };
+    html2pdf().set(opt).from(element).save();
+  }
+</script>
 
 </body>
 </html>

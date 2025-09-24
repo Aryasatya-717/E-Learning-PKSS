@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+@section('title', 'Daftar Ujian')
+
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <h1 class="text-3xl font-bold text-gray-800 mb-6">Daftar Ujian Tersedia</h1>
 
@@ -46,31 +48,23 @@
                         </div>
                     </div>
 
-                    {{-- ================================================================ --}}
-                    {{-- Area Aksi di bagian bawah kartu - PERUBAHAN DI SINI --}}
-                    {{-- ================================================================ --}}
                     <div class="bg-gray-50 px-6 py-4">
                         @if ($hasil && $hasil->status == 'Lulus')
-                            {{-- 1. Jika sudah Lulus, tampilkan tombol sertifikat --}}
                             <a href="{{ route('ujian.sertifikat', $ujian->id) }}" class="block w-full text-center px-4 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition-colors">
                                 🎓 Lihat Sertifikat
                             </a>
 
-                        {{-- INI BLOK LOGIKA YANG BARU DITAMBAHKAN --}}
                         @elseif ($hasil && $hasil->status != 'Lulus' && !$isExpired)
-                            {{-- 2. Jika sudah ada hasil, tapi GAGAL dan BELUM kedaluwarsa, beri kesempatan mengulang --}}
                             <a href="{{ route('user.ujian.mulai', $ujian->id) }}" class="block w-full text-center px-4 py-2 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition-colors">
                                 ↻ Ulangi Ujian
                             </a>
 
                         @elseif (!$hasil && !$isExpired)
-                             {{-- 3. Jika BELUM ada hasil dan BELUM kedaluwarsa, tampilkan tombol kerjakan --}}
                             <a href="{{ route('user.ujian.mulai', $ujian->id) }}" class="block w-full text-center px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition-colors">
                                 Kerjakan Sekarang
                             </a>
 
                         @else
-                            {{-- 4. Jika tidak memenuhi semua kondisi di atas (misal: kedaluwarsa), non-aktifkan tombol --}}
                             <button class="block w-full text-center px-4 py-2 bg-gray-300 text-gray-500 font-semibold rounded-lg cursor-not-allowed" disabled>
                                 Waktu Habis
                             </button>

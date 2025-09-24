@@ -18,15 +18,14 @@ class HasilUjian extends Model
         'persentase',
     ];
 
-    // Relasi ke tabel users
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Relasi ke tabel ujian
     public function ujian()
     {
         return $this->belongsTo(Ujian::class);
     }
+    
 }

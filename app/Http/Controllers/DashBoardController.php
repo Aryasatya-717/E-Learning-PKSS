@@ -6,25 +6,55 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ujian;
 use App\Models\HasilUjian;
+use App\Models\User;
+use App\Models\Modul;
 
 
 class DashBoardController extends Controller
 {
     public function admin() {
-        return view ('/admin/dashboard');
+        $totalPegawai = User::where('role', 'user')->count();
+        $totalUjian = Ujian::count();
+        $totalMateri = Modul::count();
+        $ujianTerbaru = Ujian::with('departemen')->latest()->take(5)->get();
+
+        return view('admin.dashboard', compact(
+            'totalPegawai',
+            'totalUjian',
+            'totalMateri',
+            'ujianTerbaru'
+        ));
     }
 
-    public function user() {
+    public function user() 
+    {
         $user = Auth::user();
 
-        // Ambil semua ujian yang ditujukan ke departemen user atau semua departemen
-        $ujianSiap = Ujian::where(function ($query) use ($user) {
-            $query->where('departemen_id', $user->departemen_id)
-                ->orWhereNull('departemen_id') // jika ada ujian umum
-                ->orWhere('departemen_id', 'all'); // jika kamu pakai string 'all'
-        })->get();
+        $ujianTersedia = Ujian::whereHas('departemens', function ($query) use ($user) {
+                $query->where('departemens.id', $user->departemen_id);
+            })
+            ->where('batas_waktu', '>', now())
+            ->whereDoesntHave('hasilUjian', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
+            ->latest()
+            ->get();
 
-        return view('user.dashboard', compact('ujianSiap'));
+        $riwayatUjian = HasilUjian::where('user_id', $user->id)
+            ->with('ujian') 
+            ->latest()
+            ->take(5)
+            ->get();
+            
+        $totalUjianDiikuti = HasilUjian::where('user_id', $user->id)->count();
+        $totalLulus = HasilUjian::where('user_id', $user->id)->where('status', 'Lulus')->count();
+
+        return view('user.dashboard', compact(
+            'ujianTersedia',
+            'riwayatUjian',
+            'totalUjianDiikuti',
+            'totalLulus'
+        ));
     }
     
     public function ujianUser() {

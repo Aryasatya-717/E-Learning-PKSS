@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
         successModal.classList.remove('hidden');
         resetForm();
         setTimeout(() => {
-          window.location.href = "/admin/admin/modul";
+          window.location.href = "{{ route('modul.index') }}";
         }, 1500);
     } catch (error) {
         console.error('Upload error:', error);

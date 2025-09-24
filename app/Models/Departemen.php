@@ -11,4 +11,9 @@ class Departemen extends Model
 
     protected $fillable = ['nama'];
     protected $table = 'departemens';
+
+    public function ujians()
+    {
+        return $this->belongsToMany(Ujian::class, 'departemen_ujian');
+    }
 }

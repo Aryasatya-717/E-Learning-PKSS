@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('content')
+@section('content', )
+@section('title', 'Materi')
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     <div class="flex justify-between items-center mb-8">
@@ -10,10 +11,8 @@
     </div>
 
     @if($moduls->isNotEmpty())
-        {{-- Grid container untuk kartu --}}
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach($moduls as $modul)
-                {{-- Card untuk setiap modul --}}
                 <div class="bg-white shadow-lg rounded-xl p-6 flex flex-col justify-between transition-transform transform hover:-translate-y-1">
                     <div>
                         <h2 class="text-xl font-bold text-gray-900 mb-2">{{ $modul->judul }}</h2>
@@ -28,10 +27,9 @@
                     </div>
                 </div>
             @endforeach
-        </div>+
+        </div>
 
     @else
-        {{-- Pesan jika tidak ada modul --}}
         <div class="bg-white shadow-md rounded-xl p-12 text-center">
             <h3 class="text-lg font-medium text-gray-900">Tidak Ada Modul</h3>
             <p class="mt-2 text-sm text-gray-500">

@@ -10,8 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Log;
-
-
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 
 
@@ -20,11 +19,14 @@ class ModulController extends Controller
     public function index(){
         $user = Auth::user();
         if ($user->role === 'admin') {
-            $moduls = Modul::with('departemen')->get();
+            $moduls = Modul::with('departemens')->latest()->get();
         } else {
-            $moduls = Modul::with('departemen')
-                        ->where('departemen_id', $user->departemen_id)
-                        ->get();
+            $moduls = Modul::with('departemens') 
+                       ->whereHas('departemens', function ($query) use ($user) {
+                           $query->where('departemens.id', $user->departemen_id);
+                       })
+                       ->latest()
+                       ->get();
         }
 
         return view('admin.modul.index', compact('moduls'));
@@ -42,7 +44,8 @@ class ModulController extends Controller
             $validated = $request->validate([
                 'file' => 'required|file|mimes:pdf,doc,docx,ppt,pptx|max:51200',
                 'judul' => 'required|string|max:225',
-                'departemen_id' => 'required|exists:departemens,id',
+                'departemen_ids' => 'required|array',
+                'departemen_ids.*' => 'exists:departemens,id',
                 'deskripsi' => 'nullable|string',
             ]);
 
@@ -50,53 +53,71 @@ class ModulController extends Controller
             $originalExtension = strtolower($uploadedFile->getClientOriginalExtension());
             $originalName = $uploadedFile->getClientOriginalName();
 
-            // Simpan file sementara di storage/app/temp_upload
             $randomName = Str::random(40) . '.' . $originalExtension;
             $tempPath = $uploadedFile->storeAs('temp_upload', $randomName);
 
             $originalFullPath = storage_path('app/' . $tempPath);
 
-            // Tentukan nama PDF hasil konversi
             $convertedFileName = Str::random(40) . '.pdf';
             $convertedFullPath = storage_path('app/public/modul/' . $convertedFileName);
 
-            // Konversi ke PDF jika bukan PDF
             if ($originalExtension !== 'pdf') {
-                $command = 'soffice --headless --convert-to pdf --outdir ' . escapeshellarg(storage_path('app/public/modul')) . ' ' . escapeshellarg($originalFullPath);
-                exec($command . ' 2>&1', $output, $result);
 
-                Log::info("Konversi Command: $command");
-                Log::info("Output: " . implode("\n", $output));
-                Log::info("Result: $result");
+                $tempUploadDir = public_path('temp_upload');
+                $tempConvertedDir = public_path('temp_converted');
 
-                // Pastikan hasil konversi berhasil
-                $convertedBaseName = Str::replaceLast('.' . $originalExtension, '.pdf', basename($originalFullPath));
-                $convertedFullPath = storage_path('app/public/modul/' . $convertedBaseName);
-
-                if (!file_exists($convertedFullPath)) {
-                    return response()->json(['error' => 'Gagal mengonversi file.'], 500);
+                if (!File::isDirectory($tempUploadDir)) {
+                    File::makeDirectory($tempUploadDir, 0777, true, true);
+                }
+                if (!File::isDirectory($tempConvertedDir)) {
+                    File::makeDirectory($tempConvertedDir, 0777, true, true);
                 }
 
-                // Hapus file sementara
-                Storage::delete($tempPath);
+                $uploadedFile->move($tempUploadDir, $randomName);
+                $sourceFilePath = $tempUploadDir . DIRECTORY_SEPARATOR . $randomName;
 
-                $finalFilePath = 'modul/' . $convertedBaseName;
+                $sofficePath = '"C:\Program Files\LibreOffice\program\soffice.exe"';
+                $command = $sofficePath . ' --headless --convert-to pdf --outdir ' . escapeshellarg($tempConvertedDir) . ' ' . escapeshellarg($sourceFilePath);
+                exec($command . ' 2>&1', $output, $result);
+
+                $convertedPdfName = Str::replaceLast($originalExtension, 'pdf', $randomName);
+                $convertedPdfPath = $tempConvertedDir . DIRECTORY_SEPARATOR . $convertedPdfName;
+
+                if (File::exists($convertedPdfPath)) {
+                    
+                    $desiredFileName = Str::random(40) . '.pdf';
+                    $pdfContents = File::get($convertedPdfPath);
+                    Storage::disk('public')->put('modul/' . $desiredFileName, $pdfContents);
+
+                    $finalFilePath = 'modul/' . $desiredFileName;
+
+                    File::delete($sourceFilePath);
+                    File::delete($convertedPdfPath);
+
+                } else {
+                    if(File::exists($sourceFilePath)){
+                        File::delete($sourceFilePath);
+                    }
+                    return response()->json(['error' => 'Konversi gagal pada tahap final. Periksa log server.'], 500);
+                }
+
             } else {
-                // Jika sudah PDF, langsung simpan ke direktori tujuan
+                $convertedFileName = Str::random(40) . '.pdf';
                 $stored = $uploadedFile->storeAs('modul', $convertedFileName, 'public');
                 $finalFilePath = $stored;
             }
 
-            // Simpan data ke database
             $modul = Modul::create([
                 'judul' => $validated['judul'],
-                'departemen_id' => $validated['departemen_id'],
                 'deskripsi' => $validated['deskripsi'] ?? null,
                 'file_path' => $finalFilePath,
                 'file_name' => $originalName,
             ]);
 
-            // Response untuk AJAX
+            if ($modul) {
+                $modul->departemens()->sync($validated['departemen_ids']);
+            }
+
             if ($request->wantsJson()) {
                 return response()->json([
                     'success' => true,
@@ -133,7 +154,6 @@ class ModulController extends Controller
     {
         $modul = Modul::findOrFail($id);
 
-        // Hapus file
         if (Storage::disk('public')->exists($modul->file_path)) {
             Storage::disk('public')->delete($modul->file_path);
         }
@@ -145,12 +165,12 @@ class ModulController extends Controller
 
     public function indexUser()
     {
-        $user = Auth::user(); // pastikan user login
+        $userDepartemenId = Auth::user()->departemen_id;
 
-    // Ambil hanya modul yang sesuai dengan departemen user
-        $moduls = Modul::with('departemen')
-            ->where('departemen_id', $user->departemen_id)
-            ->get();
+        $moduls = Modul::whereHas('departemens', function ($query) use ($userDepartemenId) {
+            $query->where('departemens.id', $userDepartemenId);
+        })->get();
+
         return view('user.modul.index', compact('moduls'));
     }
 
@@ -176,4 +196,36 @@ class ModulController extends Controller
             'fileUrl' => asset('storage/' . $modul->file_path)
         ]);
     }
+
+    public function edit(Modul $modul)
+    {
+        $modul->load('departemens'); // Eager load relasi
+        $departemens = Departemen::all();
+        $modulDepartemenIds = $modul->departemens->pluck('id')->toArray();
+
+        return view('admin.modul.edit', compact('modul', 'departemens', 'modulDepartemenIds'));
+    }
+
+    public function update(Request $request, Modul $modul)
+    {
+        $validatedData = $request->validate([
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'departemen_ids' => 'required|array',
+            'departemen_ids.*' => 'exists:departemens,id',
+        ]);
+
+        // Update data utama modul
+        $modul->update([
+            'judul' => $validatedData['judul'],
+            'deskripsi' => $validatedData['deskripsi'],
+        ]);
+
+        // Sinkronkan relasi departemen
+        $modul->departemens()->sync($validatedData['departemen_ids']);
+
+        // Redirect kembali ke halaman index dengan pesan sukses
+        return redirect()->route('modul.index')->with('success', 'Modul berhasil diperbarui.');
+    }
+
 }

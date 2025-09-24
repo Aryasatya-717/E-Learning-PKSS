@@ -16,4 +16,9 @@ class Modul extends Model
     public function departemen(){
         return $this->belongsTo(Departemen::class);
     }
+
+    public function departemens()
+    {
+        return $this->belongsToMany(Departemen::class, 'departemen_modul', 'modul_id', 'departemen_id')->distinct();
+    }
 }

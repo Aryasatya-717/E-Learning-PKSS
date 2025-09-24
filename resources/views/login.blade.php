@@ -9,14 +9,14 @@
 </head>
 <body class="bg-white-100 relative min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8">
 
-  <!-- Background pattern -->
+  
   <img src="/pkss/img/DC8-1.png" alt="Pattern Top Right" class="absolute top-0 right-0 w-24 sm:w-32 md:w-40 opacity-100 z-0">
   <img src="/pkss/img/DC8-2.png" alt="Pattern Bottom Left" class="absolute bottom-0 left-0 w-24 sm:w-32 md:w-40 opacity-100 z-0">
 
-  <!-- Login Box -->
+  
   <div class="bg-gray-100 rounded-2xl shadow-xl p-6 sm:p-8 w-full max-w-md z-10 relative">
     <div class="flex justify-center mb-6">
-      <img src="/pkss/img/logo-1.png" alt="Logo" class="w-32 sm:w-40">
+      <img src="/pkss/img/Logo-BAS.png" alt="Logo" class="w-32 sm:w-60">
     </div>
     <h1 class="text-xl sm:text-2xl font-bold text-center text-orange-500 mb-6">Welcome</h1>
 
@@ -47,8 +47,6 @@
     </div>  
     </form>
     
-
-  <!-- Script login -->
-  <script> src="/pkss/main.js"</script>
+ 
 </body>
 </html>

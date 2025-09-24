@@ -2,18 +2,24 @@
 
 namespace App\Models;
 
-use App\Models\Pertanyaan;
-use App\Models\Soal;
-
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Soal;
+use App\Models\Departemen;
+use App\Models\HasilUjian;
 
 class Ujian extends Model
 {
-    protected $table = 'ujian';
+    use HasFactory;
 
+    protected $table = 'ujian';
     protected $fillable = ['judul', 'deskripsi', 'batas_waktu', 'departemen_id', 'durasi'];
-    public function soal()
+    public function setDeadlineAttribute($value)
+    {
+        $this->attributes['batas_waktu'] = $value;
+    }
+
+    public function soals()
     {
         return $this->hasMany(Soal::class);
     }
@@ -23,15 +29,13 @@ class Ujian extends Model
         return $this->belongsTo(Departemen::class);
     }
 
-    public function pertanyaan()
-    {
-        return $this->hasMany(Pertanyaan::class);
-    }
-
     public function hasilUjian()
     {
         return $this->hasMany(HasilUjian::class);
     }
 
-
+    public function departemens()
+    {
+        return $this->belongsToMany(Departemen::class, 'departemen_ujian');
+    }
 }

@@ -2,9 +2,9 @@
   <table class="w-full table-auto text-sm">
     <thead class="bg-gray-100 text-gray-700">
       <tr>
-        <th class="px-4 py-3 text-left font-medium">Nama Karyawan</th>
-        <th class="px-4 py-3 text-left font-medium">Nilai</th>
-        <th class="px-4 py-3 text-left font-medium">Waktu</th>
+        <th class="px-4 py-3 text-left font-medium"> Nama </th>
+        <th class="px-4 py-3 text-left font-medium"> Nilai </th>
+        <th class="px-4 py-3 text-left font-medium"> Waktu </th>
       </tr>
     </thead>
     <tbody class="divide-y divide-gray-200">

@@ -13,46 +13,42 @@
                 <div class="space-y-2">
                     <label class="block text-sm font-medium text-gray-700">Judul Ujian</label>
                     <input type="text" name="judul" placeholder="Judul Ujian"
-                        value="{{ $ujian->judul }}" 
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                        required>
+                           value="{{ $ujian->judul }}" 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                           required>
                 </div>
 
                 <div class="space-y-2">
-                    <label class="block text-sm font-medium text-gray-700">Departemen</label>
-                    <select name="departemen_id"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                        required>
-                        <option value="">Pilih Departemen</option>
-                        @foreach($departemen as $dept)
-                            <option value="{{ $dept->id }}" {{ $ujian->departemen_id == $dept->id ? 'selected' : '' }}>
+                    <label for="departemen_ids" class="block text-sm font-medium text-gray-700">Departemen</label>
+                    <select name="departemen_ids[]" id="departemen_ids" class="w-full" multiple="multiple" required>
+                        @foreach($departemens as $dept)
+                            <option value="{{ $dept->id }}" {{ in_array($dept->id, $ujianDepartemenIds) ? 'selected' : '' }}>
                                 {{ $dept->nama }}
                             </option>
                         @endforeach
                     </select>
                 </div>
 
-
                 <div class="space-y-2">
                     <label class="block text-sm font-medium text-gray-700">Batas Waktu</label>
                     <input type="datetime-local" name="batas_waktu" 
-                        value="{{ \Carbon\Carbon::parse($ujian->batas_waktu)->format('Y-m-d\TH:i') }}"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                        required>
+                           value="{{ \Carbon\Carbon::parse($ujian->batas_waktu)->format('Y-m-d\TH:i') }}"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                           required>
                 </div>
 
                 <div class="space-y-2">
                     <label class="block text-sm font-medium text-gray-700">Durasi (menit)</label>
                     <input type="number" name="durasi" placeholder="Durasi"
-                        value="{{ $ujian->durasi }}" 
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                        required>
+                           value="{{ $ujian->durasi }}" 
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                           required>
                 </div>
 
                 <div class="md:col-span-2 space-y-2">
                     <label class="block text-sm font-medium text-gray-700">Deskripsi</label>
                     <textarea name="deskripsi" placeholder="Deskripsi"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition min-h-[100px]">{{ $ujian->deskripsi }}</textarea>
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition min-h-[100px]">{{ $ujian->deskripsi }}</textarea>
                 </div>
             </div>
 
@@ -61,7 +57,8 @@
             <div class="space-y-6">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Soal Ujian</h2>
                 <div id="soal-container" class="space-y-6">
-                    @foreach($ujian->soal as $i => $soal)
+                    
+                    @foreach($ujian->soals as $i => $soal)
                         <div class="soal bg-gray-50 rounded-xl shadow-sm p-6 border border-gray-200 relative" data-index="{{ $i }}">
                             <button type="button" class="hapus-soal absolute top-4 right-4 text-red-500 hover:text-red-700 transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -73,41 +70,38 @@
                                 <div class="space-y-2">
                                     <label class="block text-sm font-medium text-gray-700">Pertanyaan</label>
                                     <textarea name="pertanyaan[]" 
-                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition min-h-[80px]"
-                                        placeholder="Masukkan pertanyaan">{{ $soal->pertanyaan }}</textarea>
-                                </div>
-
-                                <div class="space-y-2">
-                                    <label class="block text-sm font-medium text-gray-700">Tipe Soal</label>
-                                    <select name="tipe[]" class="tipe-soal w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition">
-                                        <option value="pilihan_ganda" {{ $soal->tipe == 'pilihan_ganda' ? 'selected' : '' }}>Pilihan Ganda</option>
-                                        <option value="essay" {{ $soal->tipe == 'essay' ? 'selected' : '' }}>Essay</option>
-                                        <option value="checkbox" {{ $soal->tipe == 'checkbox' ? 'selected' : '' }}>Checkbox</option>
-                                    </select>
+                                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition min-h-[80px]"
+                                              placeholder="Masukkan pertanyaan">{{ $soal->pertanyaan }}</textarea>
                                 </div>
 
                                 <div class="opsi-wrapper space-y-3">
-                                    @php $opsi = $soal->opsi ? json_decode($soal->opsi, true) : []; @endphp
-                                    @foreach($opsi as $j => $opt)
-                                        <div class="flex items-start space-x-3">
-                                            <input type="text" name="opsi[{{ $i }}][]" value="{{ $opt }}"
-                                                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                                                placeholder="Opsi jawaban">
-                                            <div class="flex items-center h-full pt-2">
-                                                <input type="radio" name="jawaban_benar[{{ $i }}]" value="{{ $j }}"
-                                                    {{ $soal->jawaban_benar == $j ? 'checked' : '' }}
-                                                    class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300">
-                                                <span class="ml-2 text-sm text-gray-600">Benar</span>
+                                    
+                                    @php
+                                        $opsi_list = is_array($soal->opsi) ? $soal->opsi : json_decode($soal->opsi, true);
+                                    @endphp
+
+                                    @if(is_array($opsi_list))
+                                        @foreach($opsi_list as $j => $opt)
+                                            <div class="flex items-start space-x-3">
+                                                <input type="text" name="opsi[{{ $i }}][]" value="{{ $opt }}"
+                                                       class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                                                       placeholder="Opsi jawaban">
+                                                <div class="flex items-center h-full pt-2">
+                                                    <input type="radio" name="jawaban_benar[{{ $i }}]" value="{{ $j }}"
+                                                           {{ $soal->jawaban_benar == $j ? 'checked' : '' }}
+                                                           class="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300">
+                                                    <span class="ml-2 text-sm text-gray-600">Benar</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endforeach
+                                        @endforeach
+                                    @endif
                                 </div>
 
                                 <div class="space-y-2">
                                     <label class="block text-sm font-medium text-gray-700">Poin</label>
                                     <input type="number" name="poin[]" value="{{ $soal->poin }}" 
-                                        class="w-24 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-                                        placeholder="Poin">
+                                           class="w-24 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                                           placeholder="Poin">
                                 </div>
                             </div>
                         </div>
@@ -136,5 +130,15 @@
 @endsection
 
 @push('scripts')
+
+<script>
+    $(document).ready(function() {
+        $('#departemen_ids').select2({
+            placeholder: "Pilih satu atau lebih departemen",
+            allowClear: true
+        });
+    });
+</script>
+
 <script src="{{ asset('js/ujian-edit.js') }}"></script>
 @endpush

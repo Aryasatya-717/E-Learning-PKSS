@@ -1,47 +1,36 @@
-body {
-    background-color: #f8fafc;
-}
+/* exam.css */
 
+/* Tombol soal default */
 .question-btn {
-    transition: all 0.2s ease;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+  border: 2px solid #d1d5db; /* abu */
+  background-color: #f9fafb;
+  color: #374151;
 }
 
-.question-btn:hover { 
-    transform: translateY(-2px); 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+/* Hover */
+.question-btn:hover {
+  transform: scale(1.1);
+  background-color: #f3f4f6;
 }
 
-.question-btn.active { 
-    background-color: #3B82F6; 
-    color: white;
-    font-weight: 600;
+/* Soal aktif (biru) */
+.question-btn.active {
+  background-color: #dbeafe; /* biru muda */
+  border-color: #2563eb;
+  color: #1e3a8a;
+  box-shadow: 0 0 0 2px #bfdbfe;
 }
 
-.question-btn.answered { 
-    background-color: #10B981; 
-    color: white;
+/* Soal sudah dijawab (hijau) */
+.question-btn.answered {
+  background-color: #dcfce7; /* hijau muda */
+  border-color: #22c55e;
+  color: #166534;
+  box-shadow: 0 0 0 2px #bbf7d0;
 }
-
-.nav-btn {
-    transition: all 0.2s ease;
-}
-
-.nav-btn:hover { 
-    background-color: #3B82F6 !important; 
-    color: white !important;
-    transform: translateY(-1px);
-}
-
-.option-item {
-    transition: all 0.2s ease;
-}
-
-.option-item:hover {
-    background-color: #f0f4f8;
-    transform: translateX(2px);
-}
-
-.progress-bar {
-    height: 6px;
-    transition: width 0.5s ease;
-}
+    
